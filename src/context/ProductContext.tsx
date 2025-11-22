@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import getErrorMessage from "../helpers/getErrorMessage";
 import { pr } from "../helpers/pr";
 import { EndPoints } from "../staticData/endpoints";
@@ -53,3 +59,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     </ProductContext.Provider>
   );
 };
+
+export function useProducts() {
+  return useContext(ProductContext);
+}

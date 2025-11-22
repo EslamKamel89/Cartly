@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { useProducts } from "../context/ProductContext";
 
 const ProductErrorLoadingStates = () => {
-  const { products } = useContext(ProductContext);
+  const { products } = useProducts();
   return (
     <div className="mb-6">
       {products.loading && (

@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { useProducts } from "../context/ProductContext";
 import ProductErrorLoadingStates from "./ProductErrorLoadingStates";
 import ProductItem from "./ProductItem";
 
 const ProductList = () => {
-  const { products } = useContext(ProductContext);
+  const { products } = useProducts();
   return (
     <>
       <ProductErrorLoadingStates />
