@@ -1,4 +1,4 @@
 export class EndPoints {
-  static baseUrl = "http://localhost:3000";
-  static products = `${this.baseUrl}/products`;
+  static baseUrl = "http://localhost:5173";
+  static products = `${this.baseUrl}/api/products`;
 }

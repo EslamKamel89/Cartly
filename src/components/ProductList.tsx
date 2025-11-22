@@ -7,7 +7,7 @@ const ProductList: React.FC<{ products: Product[] }> = ({ products }) => {
       <div className="mb-4 flex items-center justify-between">
         <div className="text-sm text-gray-600">
           Showing
-          <span className="font-medium text-gray-900">{products.length}</span>
+          <span className="font-medium text-gray-900"> {products.length} </span>
           products
         </div>
         <div className="text-sm text-gray-500"></div>
