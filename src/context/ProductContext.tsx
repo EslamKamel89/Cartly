@@ -11,7 +11,7 @@ import { pr } from "../helpers/pr";
 import { EndPoints } from "../staticData/endpoints";
 import type { ApiResponse, Product } from "../types";
 
-export const ProductContext = createContext<{
+const ProductContext = createContext<{
   products: ApiResponse<Product[]>;
 }>({
   products: {
