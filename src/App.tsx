@@ -1,41 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { HiShoppingCart } from "react-icons/hi2";
 import ProductList from "./components/ProductList";
-import getErrorMessage from "./helpers/getErrorMessage";
-import { pr } from "./helpers/pr";
-import { EndPoints } from "./staticData/endpoints";
-import { type ApiResponse, type Product } from "./types/index.d";
+import { ProductContext } from "./context/ProductContext";
 
 function App() {
-  const [products, setProducts] = useState<ApiResponse<Product[]>>({
-    loading: false,
-    error: null,
-    data: [],
-  });
-  const fetchProducts = async () => {
-    try {
-      setProducts((prev) => ({ ...prev, loading: true }));
-      const res = await fetch(EndPoints.products);
-      if (!res.ok) throw new Error("cant fetch the products");
-      const data = await res.json();
-      pr(data, { title: "raw data" });
-      setProducts({
-        ...products,
-        loading: false,
-        error: null,
-        data: data,
-      });
-    } catch (error) {
-      setProducts((prev) => ({
-        ...prev,
-        error: getErrorMessage(error),
-        loading: false,
-      }));
-    }
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { products } = useContext(ProductContext);
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
@@ -84,7 +53,7 @@ function App() {
 
         {/* Products grid */}
         {!products.loading && !products.error && products.data && (
-          <ProductList products={products.data}></ProductList>
+          <ProductList></ProductList>
         )}
       </div>
     </div>
