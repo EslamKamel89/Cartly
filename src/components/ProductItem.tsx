@@ -1,6 +1,11 @@
+import { useCart } from "../context/CartContext";
 import type { Product } from "../types/index.d";
 
 const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
+  const { setCart } = useCart();
+  const addToCart = () => {
+    setCart!((prev) => [...prev, product]);
+  };
   return (
     <article className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
       {product.image ? (
@@ -46,6 +51,7 @@ const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
           <button
             type="button"
             className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-600 bg-indigo-600 text-white px-3 py-2 text-sm font-medium shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            onClick={() => addToCart()}
           >
             Add to cart
           </button>

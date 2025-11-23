@@ -1,16 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Product } from "../types";
-const initial = {
-  products: [],
+type CartState = {
+  cart?: Product[];
+  setCart?: React.Dispatch<React.SetStateAction<Product[]>>;
 };
-const CartContext = createContext<{ products: Product[] }>(initial);
+
+const CartContext = createContext<CartState>({});
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [cart, setCart] = useState<Product[]>([]);
   return (
-    <CartContext.Provider value={initial}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ cart, setCart }}>
+      {children}
+    </CartContext.Provider>
   );
 };
 
