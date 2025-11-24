@@ -1,10 +1,11 @@
+import { FaTrash } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 
 const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { cart = [] } = useCart();
+  const { cart, removeFromCart } = useCart();
 
-  const count = cart.reduce((sum, c) => sum + c.quantity, 0);
-  const total = cart.reduce(
+  const count = cart!.reduce((sum, c) => sum + c.quantity, 0);
+  const total = cart!.reduce(
     (sum, c) => sum + c.quantity * (c.product.price || 0),
     0
   );
@@ -24,13 +25,13 @@ const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         <ul className="space-y-3">
-          {cart.length === 0 && (
+          {cart!.length === 0 && (
             <li className="text-center text-gray-500 py-8">
               Your cart is empty
             </li>
           )}
 
-          {cart.map((item) => {
+          {cart!.map((item) => {
             const key = item.product?.id;
             return (
               <li
@@ -52,12 +53,20 @@ const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-900">
-                      {item.product?.name}{" "}
-                      <span className="text-xs text-gray-500">
-                        ×{item.quantity}
-                      </span>
-                    </h4>
+                    <div className="flex justify-between w-full">
+                      <h4 className="text-sm font-semibold text-gray-900">
+                        {item.product?.name}
+                        <span className="text-xs text-gray-500">
+                          ×{item.quantity}
+                        </span>
+                      </h4>
+                      <div
+                        onClick={() => removeFromCart!(item.product.id)}
+                        className="cursor-pointer"
+                      >
+                        <FaTrash className="text-red-500" />
+                      </div>
+                    </div>
                     <p className="mt-1 text-xs text-gray-600 line-clamp-2">
                       {item.product?.description}
                     </p>

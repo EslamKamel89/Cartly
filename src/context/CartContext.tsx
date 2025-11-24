@@ -5,6 +5,7 @@ type CartItem = { product: Product; quantity: number };
 type CartState = {
   cart?: CartItem[];
   addToCart?: (v: Product) => void;
+  removeFromCart?: (v: string) => void;
 };
 
 const CartContext = createContext<CartState>({});
@@ -27,8 +28,25 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
       }
     });
   };
+  const removeFromCart = (id: string) => {
+    const cartItem: CartItem | undefined = cart.find((c) => c.product.id == id);
+    if (!cartItem) return;
+    if (cartItem.quantity > 1) {
+      setCart((prev) => {
+        return prev.map((item) =>
+          item.product.id == id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+      });
+    } else {
+      setCart((prev) => {
+        return prev.filter((item) => item.product.id != id);
+      });
+    }
+  };
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
