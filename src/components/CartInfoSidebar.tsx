@@ -2,7 +2,7 @@ import { FaTrash } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 
 const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
 
   const count = cart!.reduce((sum, c) => sum + c.quantity, 0);
   const total = cart!.reduce(
@@ -11,7 +11,7 @@ const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   );
 
   return (
-    <div className="flex-1 flex flex-col h-full py-5">
+    <div className="flex-1 flex flex-col h-full max-h-screen py-5 overflow-hidden">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -96,7 +96,7 @@ const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </ul>
       </div>
 
-      <div className="border-t p-4 bg-white mb-15">
+      <div className="border-t p-4 bg-white mb-0">
         <div className="flex items-center justify-between mb-3">
           <div className="text-sm text-gray-500">Total</div>
           <div className="text-lg font-semibold">${total.toFixed(2)}</div>
@@ -110,6 +110,12 @@ const CartInfoSidebar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             className="flex-1 px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
           >
             Checkout
+          </button>
+          <button
+            onClick={() => clearCart!()}
+            className="px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-100 bg-red-600 hover:bg-red-500 transition"
+          >
+            Clear
           </button>
           <button
             onClick={() => {
