@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import type { Product } from "../types";
 type CartItem = { product: Product; quantity: number };
 type CartState = {
@@ -14,7 +20,9 @@ const CartContext = createContext<CartState>({});
 export const CartProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(
+    JSON.parse(localStorage.getItem("cart") ?? "[]")
+  );
   const addToCart = (product: Product) => {
     setCart!((prev) => {
       const existing = prev.find((c) => c.product.id === product.id);
@@ -49,6 +57,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   const clearCart = () => {
     setCart([]);
   };
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
   return (
     <CartContext.Provider
       value={{ cart, addToCart, removeFromCart, clearCart }}
